@@ -10,36 +10,36 @@
 
 <p align="center">
   <a href="https://skillicons.dev">
-    <img src="https://skillicons.dev/icons?i=php,laravel,mysql,tailwind,vite,js,git&theme=light" alt="Tecnologías utilizadas en MediConnect" />
+    <img src="https://skillicons.dev/icons?i=php,laravel,mysql,tailwind,vite,js,git&theme=light" alt="Technologies used in MediConnect" />
   </a>
 </p>
 
-**MediConnect** es una aplicación web para la gestión de citas médicas. El sistema permite administrar pacientes, doctores, horarios de disponibilidad y reservas de citas desde una plataforma construida con **Laravel**, **Blade**, **MySQL** y control de acceso basado en roles.
+**MediConnect** is a web application for medical appointment management. The system allows patients, doctors, schedules, and appointments to be managed from a platform built with **Laravel**, **Blade**, **MySQL**, and role-based access control.
 
-El proyecto está diseñado para centralizar el flujo de atención entre pacientes, doctores y administradores, permitiendo que cada tipo de usuario acceda únicamente a las funcionalidades necesarias según su rol dentro del sistema.
+The project is designed to centralize the appointment workflow between patients, doctors, and administrators, allowing each type of user to access only the features required for their role within the system.
 
-> Nota: La interfaz de la aplicación está actualmente en español, ya que el proyecto está orientado a entornos médicos hispanohablantes.
+> Note: The application interface is currently in Spanish, as the project is designed for medical appointment management in Spanish-speaking environments.
 
-## Tabla de Contenidos
+## Table of Contents
 
-- [Tecnologías](#tecnologías)
-- [Descripción General](#descripción-general)
-- [Características Principales](#características-principales)
-- [Roles del Sistema](#roles-del-sistema)
-- [Modelo de Dominio](#modelo-de-dominio)
-- [Requisitos Previos](#requisitos-previos)
-- [Instalación](#instalación)
-- [Configuración](#configuración)
-- [Base de Datos](#base-de-datos)
-- [Ejecución Local](#ejecución-local)
-- [Credenciales de Prueba](#credenciales-de-prueba)
-- [Comandos Útiles](#comandos-útiles)
-- [Estructura del Proyecto](#estructura-del-proyecto)
-- [Documentación Técnica](#documentación-técnica)
-- [Autor](#autor)
-- [Licencia](#licencia)
+- [Technologies](#technologies)
+- [Overview](#overview)
+- [Main Features](#main-features)
+- [System Roles](#system-roles)
+- [Domain Model](#domain-model)
+- [Prerequisites](#prerequisites)
+- [Installation](#installation)
+- [Configuration](#configuration)
+- [Database](#database)
+- [Running Locally](#running-locally)
+- [Test Credentials](#test-credentials)
+- [Useful Commands](#useful-commands)
+- [Project Structure](#project-structure)
+- [Technical Documentation](#technical-documentation)
+- [Author](#author)
+- [License](#license)
 
-## Tecnologías
+## Technologies
 
 - **PHP 8.2+**
 - **Laravel 12**
@@ -53,179 +53,179 @@ El proyecto está diseñado para centralizar el flujo de atención entre pacient
 - **Composer**
 - **npm**
 
-## Descripción General
+## Overview
 
-MediConnect fue desarrollado como una solución web para organizar la gestión de citas médicas entre pacientes y profesionales de salud. Su objetivo es reemplazar procesos manuales o desorganizados por una plataforma centralizada, trazable y accesible desde el navegador.
+MediConnect was developed as a web solution to organize medical appointment management between patients and healthcare professionals. Its goal is to replace manual or scattered processes with a centralized, traceable, browser-accessible platform.
 
-La aplicación implementa autenticación, autorización por roles, dashboards personalizados, administración de doctores, gestión de horarios, creación de citas, actualización de estados y control de usuarios activos e inactivos.
+The application includes authentication, role-based authorization, personalized dashboards, doctor management, schedule management, appointment booking, appointment status updates, and control over active or inactive users.
 
-El sistema se apoya en el patrón **MVC** de Laravel, separando la lógica de negocio en controladores, la persistencia de datos en modelos Eloquent y la presentación en vistas Blade.
+The system follows Laravel's **MVC** architecture, separating business logic into controllers, data persistence into Eloquent models, and presentation into Blade views.
 
-## Características Principales
+## Main Features
 
-### Autenticación y autorización
+### Authentication and authorization
 
-- Registro de nuevos usuarios.
-- Inicio y cierre de sesión.
-- Autenticación basada en sesiones de Laravel.
-- Protección de rutas mediante middleware.
-- Control de acceso basado en roles.
-- Middleware personalizado `CheckRole`.
-- Redirección de usuarios según su rol.
-- Validación de usuarios activos antes de permitir acceso al sistema.
+- User registration.
+- Login and logout.
+- Session-based authentication with Laravel.
+- Route protection through middleware.
+- Role-based access control.
+- Custom `CheckRole` middleware.
+- User redirection according to role.
+- Active user validation before allowing access to the system.
 
-### Gestión de usuarios
+### User management
 
-- Administración de usuarios del sistema.
-- Roles disponibles:
-  - Paciente.
+- System user administration.
+- Available roles:
+  - Patient.
   - Doctor.
-  - Administrador.
-- Activación y desactivación de cuentas.
-- Relación entre usuarios y perfiles médicos.
-- Control de acceso según estado activo o inactivo.
-- Soporte para soft deletes en usuarios.
-- Gestión administrativa de cuentas desde el panel de administrador.
+  - Administrator.
+- User account activation and deactivation.
+- Relationship between users and medical profiles.
+- Access control based on active or inactive status.
+- Soft delete support for users.
+- Administrative account management from the admin panel.
 
-### Gestión de doctores
+### Doctor management
 
-- Registro de doctores con datos profesionales.
-- Asociación entre doctor y usuario.
-- Número de licencia médica.
-- Especialidad médica.
-- Biografía profesional.
-- Foto o URL de imagen de perfil.
-- Estado activo o inactivo.
-- Soft delete para desactivar doctores sin eliminar definitivamente la información.
-- Restauración de doctores desactivados.
-- Sincronización automática entre el perfil del doctor y su usuario asociado.
+- Doctor registration with professional information.
+- Association between doctor and user.
+- Medical license number.
+- Medical specialty.
+- Professional biography.
+- Profile photo or profile image URL.
+- Active or inactive status.
+- Soft delete support to deactivate doctors without permanently deleting their information.
+- Restoration of deactivated doctors.
+- Automatic synchronization between the doctor profile and its related user.
 
-### Horarios de disponibilidad
+### Availability schedules
 
-- Registro de horarios por doctor.
-- Configuración por día de la semana.
-- Hora de inicio y hora de finalización.
-- Intervalos de atención.
-- Activación o desactivación de horarios.
-- Relación directa entre horarios y doctores.
-- Base para validar disponibilidad al momento de reservar citas.
+- Schedule registration by doctor.
+- Configuration by day of the week.
+- Start time and end time.
+- Appointment intervals.
+- Schedule activation and deactivation.
+- Direct relationship between schedules and doctors.
+- Base structure to validate availability when booking appointments.
 
-### Sistema de citas médicas
+### Medical appointment system
 
-- Reserva de citas por pacientes.
-- Asociación entre cita, paciente y doctor.
-- Fecha y hora de la cita.
-- Motivo de consulta.
-- Notas adicionales.
-- Estados de cita:
-  - Pendiente.
-  - Confirmada.
-  - Atendida.
-  - Cancelada.
-- Cancelación de citas.
-- Confirmación o actualización del estado por parte del doctor.
-- Historial de citas por paciente.
-- Visualización de citas próximas y anteriores.
+- Appointment booking by patients.
+- Association between appointment, patient, and doctor.
+- Appointment date and time.
+- Consultation reason.
+- Additional notes.
+- Appointment statuses:
+  - Pending.
+  - Confirmed.
+  - Attended.
+  - Cancelled.
+- Appointment cancellation.
+- Status confirmation or update by doctors.
+- Appointment history by patient.
+- Upcoming and past appointment views.
 
-### Dashboard de paciente
+### Patient dashboard
 
-- Vista personalizada para pacientes.
-- Resumen de citas del día.
-- Conteo de citas pendientes.
-- Conteo de citas confirmadas.
-- Listado de próximas citas.
-- Historial de citas.
-- Información del doctor asociado a cada cita.
-- Acceso a la reserva y gestión de citas propias.
+- Personalized view for patients.
+- Daily appointment summary.
+- Pending appointment count.
+- Confirmed appointment count.
+- Upcoming appointment list.
+- Appointment history.
+- Doctor information associated with each appointment.
+- Access to booking and managing personal appointments.
 
-### Dashboard de doctor
+### Doctor dashboard
 
-- Vista personalizada para doctores.
-- Listado de citas asignadas.
-- Citas pendientes de confirmación.
-- Citas confirmadas.
-- Citas atendidas.
-- Agenda diaria.
-- Agenda semanal.
-- Actualización del estado de citas.
-- Visualización de pacientes asociados a las citas.
-- Generación de bloques horarios para la jornada médica.
+- Personalized view for doctors.
+- Assigned appointment list.
+- Appointments pending confirmation.
+- Confirmed appointments.
+- Attended appointments.
+- Daily schedule.
+- Weekly schedule.
+- Appointment status updates.
+- Patient information for each appointment.
+- Time slot generation for the medical workday.
 
-### Panel administrativo
+### Administrative panel
 
-- Dashboard general para administradores.
-- Gestión de doctores.
-- Gestión de usuarios.
-- Gestión de horarios.
-- Visualización de citas del sistema.
-- Administración de doctores activos e inactivos.
-- Acciones administrativas para activar, desactivar, editar o eliminar registros.
-- Estadísticas generales del sistema.
+- General dashboard for administrators.
+- Doctor management.
+- User management.
+- Schedule management.
+- System-wide appointment overview.
+- Management of active and inactive doctors.
+- Administrative actions to activate, deactivate, edit, or delete records.
+- General system statistics.
 
-### Observers y sincronización automática
+### Observers and automatic synchronization
 
-- Uso de observers para automatizar lógica relacionada con doctores y usuarios.
-- Sincronización del rol de usuario cuando se crea, desactiva o restaura un doctor.
-- Al desactivar un doctor, el usuario asociado puede pasar a estado inactivo.
-- Al restaurar un doctor, el usuario asociado puede recuperar su rol y estado activo.
-- Registro de cambios importantes mediante logs.
-- Separación de lógica automática fuera de los controladores.
+- Observers used to automate logic related to doctors and users.
+- User role synchronization when a doctor is created, deactivated, or restored.
+- When a doctor is deactivated, the related user can be moved to an inactive state.
+- When a doctor is restored, the related user can recover the doctor role and active status.
+- Important changes are registered through logs.
+- Automatic logic is kept separated from controllers.
 
-### Seguridad y validaciones
+### Security and validation
 
-- Protección CSRF en formularios.
-- Hashing de contraseñas.
-- Protección contra SQL Injection mediante Eloquent ORM.
-- Escapado automático de datos en vistas Blade.
-- Validaciones de formularios.
-- Restricción de rutas según rol.
-- Validación de citas futuras.
-- Validación de estados permitidos para citas.
-- Prevención de operaciones no autorizadas.
+- CSRF protection in forms.
+- Password hashing.
+- SQL Injection prevention through Eloquent ORM.
+- Automatic data escaping in Blade views.
+- Form validations.
+- Route restrictions by role.
+- Future appointment date validation.
+- Appointment status validation.
+- Prevention of unauthorized operations.
 
-## Roles del Sistema
+## System Roles
 
-MediConnect utiliza roles para separar responsabilidades y permisos dentro de la aplicación.
+MediConnect uses roles to separate responsibilities and permissions within the application.
 
-| Rol | Descripción |
+| Role | Description |
 | --- | --- |
-| `admin` | Tiene acceso al panel administrativo, gestión de usuarios, doctores, horarios y citas. |
-| `doctor` | Puede revisar sus citas, gestionar estados de atención y visualizar su agenda médica. |
-| `patient` | Puede reservar citas, consultar sus próximas citas y revisar su historial. |
+| `admin` | Has access to the administrative panel, user management, doctor management, schedules, and appointments. |
+| `doctor` | Can review assigned appointments, manage appointment statuses, and view the medical schedule. |
+| `patient` | Can book appointments, review upcoming appointments, and view appointment history. |
 
-## Modelo de Dominio
+## Domain Model
 
-El sistema está organizado alrededor de las principales entidades de una plataforma de citas médicas.
+The system is organized around the main entities of a medical appointment platform.
 
-| Entidad | Propósito |
+| Entity | Purpose |
 | --- | --- |
-| `User` | Representa a los usuarios del sistema y almacena datos de autenticación, rol y estado. |
-| `Doctor` | Representa el perfil profesional de un doctor asociado a un usuario. |
-| `Schedule` | Define los horarios de disponibilidad de cada doctor. |
-| `Appointment` | Representa una cita médica entre un paciente y un doctor. |
+| `User` | Represents system users and stores authentication data, role, and account status. |
+| `Doctor` | Represents the professional profile of a doctor associated with a user. |
+| `Schedule` | Defines the availability schedules of each doctor. |
+| `Appointment` | Represents a medical appointment between a patient and a doctor. |
 
-### Relaciones principales
+### Main relationships
 
-- Un `User` puede tener un perfil de `Doctor`.
-- Un `User` con rol de paciente puede tener muchas `Appointment`.
-- Un `Doctor` pertenece a un `User`.
-- Un `Doctor` puede tener muchas `Appointment`.
-- Un `Doctor` puede tener muchos `Schedule`.
-- Una `Appointment` pertenece a un paciente y a un doctor.
-- Un `Schedule` pertenece a un doctor.
+- A `User` may have a `Doctor` profile.
+- A `User` with the patient role may have many `Appointment` records.
+- A `Doctor` belongs to a `User`.
+- A `Doctor` may have many `Appointment` records.
+- A `Doctor` may have many `Schedule` records.
+- An `Appointment` belongs to a patient and to a doctor.
+- A `Schedule` belongs to a doctor.
 
-## Requisitos Previos
+## Prerequisites
 
-Antes de instalar el proyecto, asegúrate de tener instalado:
+Before installing the project, make sure you have the following installed:
 
-- PHP 8.2 o superior.
+- PHP 8.2 or higher.
 - Composer.
-- MySQL 8.0 o superior.
+- MySQL 8.0 or higher.
 - Node.js.
 - npm.
 - Git.
 
-Extensiones PHP recomendadas para ejecutar Laravel con MySQL:
+Recommended PHP extensions for running Laravel with MySQL:
 
 ```ini
 extension=curl
@@ -237,53 +237,53 @@ extension=mysqli
 extension=zip
 ```
 
-## Instalación
+## Installation
 
-Clona el repositorio:
+Clone the repository:
 
 ```bash
 git clone https://github.com/CristoferGuillen/Gestion-Citas-Medicas.git
 ```
 
-Entra a la carpeta del proyecto:
+Enter the project folder:
 
 ```bash
 cd Gestion-Citas-Medicas
 ```
 
-Instala las dependencias de PHP:
+Install PHP dependencies:
 
 ```bash
 composer install
 ```
 
-Instala las dependencias de JavaScript:
+Install JavaScript dependencies:
 
 ```bash
 npm install
 ```
 
-Copia el archivo de entorno:
+Copy the environment file:
 
 ```bash
 cp .env.example .env
 ```
 
-En Windows PowerShell:
+On Windows PowerShell:
 
 ```powershell
 Copy-Item .env.example .env
 ```
 
-Genera la clave de la aplicación:
+Generate the application key:
 
 ```bash
 php artisan key:generate
 ```
 
-## Configuración
+## Configuration
 
-Edita el archivo `.env` y configura los valores principales de la aplicación:
+Edit the `.env` file and configure the main application values:
 
 ```env
 APP_NAME=MediConnect
@@ -292,7 +292,7 @@ APP_DEBUG=true
 APP_URL=http://localhost:8000
 ```
 
-Configura la conexión a MySQL:
+Configure the MySQL connection:
 
 ```env
 DB_CONNECTION=mysql
@@ -303,56 +303,56 @@ DB_USERNAME=root
 DB_PASSWORD=your_password
 ```
 
-Crea una base de datos llamada `mediconnect` antes de ejecutar las migraciones.
+Create a database named `mediconnect` before running the migrations.
 
-Puedes crearla desde MySQL con:
+You can create it from MySQL with:
 
 ```sql
 CREATE DATABASE mediconnect CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 ```
 
-## Base de Datos
+## Database
 
-Ejecuta las migraciones:
+Run the migrations:
 
 ```bash
 php artisan migrate
 ```
 
-Carga los datos iniciales:
+Load the initial data:
 
 ```bash
 php artisan db:seed
 ```
 
-También puedes recrear la base de datos y cargar los seeders en un solo comando:
+You can also reset the database and load seeders in a single command:
 
 ```bash
 php artisan migrate:fresh --seed
 ```
 
-> Advertencia: `migrate:fresh --seed` elimina las tablas existentes, vuelve a ejecutar las migraciones y carga nuevamente los datos de prueba.
+> Warning: `migrate:fresh --seed` deletes the existing tables, runs all migrations again, and loads the test data.
 
-### Seeders disponibles
+### Available seeders
 
-El proyecto incluye seeders para crear datos iniciales de desarrollo:
+The project includes seeders to create initial development data:
 
-| Seeder | Descripción |
+| Seeder | Description |
 | --- | --- |
-| `DatabaseSeeder` | Seeder principal que ejecuta la carga general de datos. |
-| `DoctorSeeder` | Crea doctores de prueba con usuarios asociados. |
-| `ScheduleSeeder` | Crea horarios de disponibilidad para los doctores. |
-| `AppointmentSeeder` | Crea citas médicas de ejemplo con distintos estados. |
+| `DatabaseSeeder` | Main seeder that runs the general data loading process. |
+| `DoctorSeeder` | Creates test doctors with related user accounts. |
+| `ScheduleSeeder` | Creates availability schedules for doctors. |
+| `AppointmentSeeder` | Creates sample medical appointments with different statuses. |
 
-## Ejecución Local
+## Running Locally
 
-Puedes ejecutar el entorno de desarrollo completo con:
+Run the complete development environment with:
 
 ```bash
 composer run dev
 ```
 
-También puedes ejecutar Laravel y Vite por separado.
+You can also run Laravel and Vite separately.
 
 Terminal 1:
 
@@ -366,13 +366,13 @@ Terminal 2:
 npm run dev
 ```
 
-Luego abre la aplicación en:
+Then open the application at:
 
 ```text
 http://localhost:8000
 ```
 
-Rutas principales:
+Main routes:
 
 ```text
 http://localhost:8000/login
@@ -383,76 +383,76 @@ http://localhost:8000/doctor/dashboard
 http://localhost:8000/paciente/dashboard
 ```
 
-## Credenciales de Prueba
+## Test Credentials
 
-Al ejecutar los seeders, el proyecto crea usuarios iniciales para probar los roles principales del sistema.
+When running the seeders, the project creates initial users to test the main system roles.
 
-| Rol | Email | Contraseña |
+| Role | Email | Password |
 | --- | --- | --- |
-| Administrador | `admin@example.com` | `password123` |
+| Administrator | `admin@example.com` | `password123` |
 | Doctor | `carlos.perez@hospital.com` | `password123` |
 | Doctor | `maria.gonzalez@hospital.com` | `password123` |
 | Doctor | `juan.rodriguez@hospital.com` | `password123` |
 
-Los pacientes de prueba pueden generarse mediante factories y seeders. Revisa la base de datos después de ejecutar `php artisan db:seed` para consultar los correos creados.
+Test patients may be generated through factories and seeders. Check the database after running `php artisan db:seed` to review the generated patient accounts.
 
-## Comandos Útiles
+## Useful Commands
 
-Ejecutar migraciones:
+Run migrations:
 
 ```bash
 php artisan migrate
 ```
 
-Ejecutar seeders:
+Run seeders:
 
 ```bash
 php artisan db:seed
 ```
 
-Recrear la base de datos con datos iniciales:
+Recreate the database with initial data:
 
 ```bash
 php artisan migrate:fresh --seed
 ```
 
-Iniciar el servidor local:
+Start the local server:
 
 ```bash
 php artisan serve
 ```
 
-Ejecutar Vite:
+Run Vite:
 
 ```bash
 npm run dev
 ```
 
-Compilar assets para producción:
+Build assets for production:
 
 ```bash
 npm run build
 ```
 
-Ejecutar el entorno completo de desarrollo:
+Run the complete development environment:
 
 ```bash
 composer run dev
 ```
 
-Ejecutar tests:
+Run tests:
 
 ```bash
 php artisan test
 ```
 
-Ejecutar el script de pruebas definido en Composer:
+Run the Composer test script:
 
 ```bash
 composer test
 ```
 
-## Estructura del Proyecto
+## Project Structure
 
 ```text
 Gestion-Citas-Medicas/
@@ -519,32 +519,32 @@ Gestion-Citas-Medicas/
 └── vite.config.js
 ```
 
-## Documentación Técnica
+## Technical Documentation
 
-El repositorio incluye documentación técnica adicional en:
+The repository includes additional technical documentation in:
 
 ```text
 TECHNICAL_DOCUMENTATION.md
 ```
 
-Esta documentación describe con mayor detalle:
+This documentation describes in greater detail:
 
-- Arquitectura MVC.
-- Modelos y relaciones.
+- MVC architecture.
+- Models and relationships.
 - Observers.
 - Soft deletes.
-- Middleware de autorización.
-- Flujos de negocio.
-- Gestión de estados.
-- Implementación técnica del proyecto.
+- Authorization middleware.
+- Business workflows.
+- Status management.
+- Technical implementation details.
 
-## Autor
+## Author
 
-Desarrollado por **Cristofer Guillen**.
+Developed by **Cristofer Guillen**.
 
 - GitHub: [@CristoferGuillen](https://github.com/CristoferGuillen)
-- Repositorio: [Gestion-Citas-Medicas](https://github.com/CristoferGuillen/Gestion-Citas-Medicas)
+- Repository: [Gestion-Citas-Medicas](https://github.com/CristoferGuillen/Gestion-Citas-Medicas)
 
-## Licencia
+## License
 
-Este proyecto está disponible bajo la licencia **MIT**.
+This project is available under the **MIT** license.
